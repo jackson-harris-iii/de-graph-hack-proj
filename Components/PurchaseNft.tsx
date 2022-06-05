@@ -12,11 +12,20 @@ import {
 import { Group, Avatar, Select, Modal } from '@mantine/core';
 import countryData from '../Utils/country.json';
 
-const nftOptions = ['bush.gif', 'flower.gif', 'giphy.gif'];
+const nftOptions = [
+  { image: 'flower.gif', duration: 1 },
+  { image: 'bush.gif', duration: 3 },
+  { image: 'giphy.gif', duration: 12 },
+];
 //@ts-ignore
 const PurchaseNft = ({ spendMethod }) => {
   const [visible, setVisible] = useState(false);
-  const handler = () => setVisible(true);
+  const [purchaseOption, setPurchaseOption] = useState();
+  //@ts-ignore
+  const handler = (option) => {
+    setVisible(true);
+    setPurchaseOption(option);
+  };
   const closeHandler = () => {
     setVisible(false);
     console.log('closed');
@@ -24,16 +33,22 @@ const PurchaseNft = ({ spendMethod }) => {
 
   const [countries, setCountries] = useState([]);
   const [costCalc, setCostCalc] = useState('tbd...select country first');
-
+  //@ts-ignore
   const handleChange = (e) => {
     const selectedCountry = countryData.find(
       (element) => Object.keys(element)[0] === e
     );
     //@ts-ignore
-    const monthlyPriceMatic = selectedCountry[e].co2PerCapita * 1.05 * 0.58;
+    const monthlyPriceMatic =
+      //@ts-ignore
+      selectedCountry[e].co2PerCapita * 1.05 * 0.58 * purchaseOption.duration;
+    //@ts-ignore
     const monthlyPriceUSD = selectedCountry[e].co2PerCapita * 1.05;
+    //@ts-ignore
     console.log('changed', selectedCountry[e]);
+    //@ts-ignore
     console.log('price', monthlyPriceMatic);
+    //@ts-ignore
     setCostCalc(monthlyPriceMatic);
   };
 
@@ -54,7 +69,7 @@ const PurchaseNft = ({ spendMethod }) => {
                 <Card key={key}>
                   <Card.Body>
                     <Card.Image
-                      src={option}
+                      src={option.image}
                       height={400}
                       width="100%"
                       alt="Card example background"
@@ -75,10 +90,10 @@ const PurchaseNft = ({ spendMethod }) => {
                     <Row>
                       <Col>
                         <Text color="#000" size={12}>
-                          Available soon.
+                          Carbon Offset Commitment
                         </Text>
                         <Text color="#000" size={12}>
-                          Get notified.
+                          {option.duration} Month(s)
                         </Text>
                       </Col>
                       <Col>
@@ -88,7 +103,7 @@ const PurchaseNft = ({ spendMethod }) => {
                             auto
                             rounded
                             color="secondary"
-                            onClick={handler}
+                            onClick={(option) => handler(option)}
                           >
                             <Text
                               css={{ color: 'inherit' }}
