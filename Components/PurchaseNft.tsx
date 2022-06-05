@@ -10,7 +10,8 @@ import {
   Checkbox,
   Input,
 } from '@nextui-org/react';
-import { Group, Avatar, text, Select } from '@mantine/core';
+import { Group, Avatar, Select } from '@mantine/core';
+import countryData from '../Utils/country.json';
 
 const nftOptions = ['bush.gif', 'flower.gif', 'giphy.gif'];
 //@ts-ignore
@@ -21,6 +22,15 @@ const PurchaseNft = ({ spendMethod }) => {
     setVisible(false);
     console.log('closed');
   };
+
+  const [countries, setCountries] = useState([]);
+
+  useEffect(() => {
+    const names = countryData.map((country) => Object.keys(country)[0]);
+    console.log(names);
+    setCountries(names);
+  }, []);
+
   return (
     <>
       <Grid.Container justify="center">
@@ -102,6 +112,15 @@ const PurchaseNft = ({ spendMethod }) => {
           </Text>
         </Modal.Header>
         <Modal.Body>
+          <Row>
+            <Select
+              label="Your favorite framework/library"
+              placeholder="Pick one"
+              searchable
+              nothingFound="No options"
+              data={countries}
+            />
+          </Row>
           <Row justify="space-between">
             <Checkbox>
               <Text size={14}>Remember me</Text>
