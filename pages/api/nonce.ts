@@ -11,6 +11,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       req.session.nonce = generateNonce();
       await req.session.save();
       res.setHeader('Content-Type', 'text/plain');
+      // @ts-ignore
       res.send(req.session.nonce);
       break;
     default:
