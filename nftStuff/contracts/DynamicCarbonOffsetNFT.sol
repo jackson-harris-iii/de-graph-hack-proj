@@ -9,15 +9,15 @@ contract DynamicCarbonOffsetNFT is
     ERC721Enumerable,
     Ownable,
     KeeperCompatibleInterface,
-    ChainlinkClient, 
+    ChainlinkClient,
     ConfirmedOwner
 {
     using Strings for uint256;
     using Counters for Counters.Counter;
     using Chainlink for Chainlink.Request;
-    
+
     Counters.Counter private _tokenIds;
-    
+
     bytes32 private jobId;
     uint256 private fee;
 
@@ -43,12 +43,16 @@ contract DynamicCarbonOffsetNFT is
   */
 
     event NewDCON_NFT_Minted(
-          address indexed sender,
-          uint256 indexed newItemId,
-          string ipfsURI
-        );
+        address indexed sender,
+        uint256 indexed newItemId,
+        string ipfsURI
+    );
 
-    event WiltRequest(bytes32 indexed requestId, address indexed sender,string ipfsURI);    
+    event WiltRequest(
+        bytes32 indexed requestId,
+        address indexed sender,
+        string ipfsURI
+    );
 
     uint256 public tokenCounter;
     mapping(uint256 => DCON) public DCONS_mapping;
@@ -92,11 +96,11 @@ contract DynamicCarbonOffsetNFT is
         uint256 newItemId = _tokenIds.current();
 
         DCON memory newDCON = DCON({
-          owner: msg.sender;
-          tokenURI: ipfsURI;
-          tokenId: newItemId;
-        })
-        DCONS_mapping[newItemId + 1] = DCON
+            owner: msg.sender,
+            tokenURI: ipfsURI,
+            tokenId: newItemId
+        });
+        DCONS_mapping[newItemId + 1] = DCON;
         _safeMint(msg.sender, newItemId);
 
         //Update URI !!!
@@ -104,11 +108,15 @@ contract DynamicCarbonOffsetNFT is
 
         _tokensIds.increment();
 
-        emit NewDCON_NFT_Minted(
-          msg.sender,
-          newItemId,
-          ipfsURI
-        )
+        emit NewDCON_NFT_Minted(msg.sender, newItemId, ipfsURI);
+    }
+
+    function fulfill(bytes32 _requestId, string update)
+        public
+        recordChainlinkFulfillment(_requestId)
+    {
+        emit RequestVolume(_requestId, _update);
+        update = _update;
     }
 
     function _setTokenURI(uint256 _tokenId, string memory _tokenURI)
@@ -136,7 +144,8 @@ contract DynamicCarbonOffsetNFT is
         return _tokenURIs[_tokenId];
     }
 
-    function wiltNFT(uint256 _tokenId) {
-
+    function wiltNFT(uint256 _tokenId) public {
+        DCONS storage currentDCON = DCONS[_tokenId];
+        IRequestURIUpdate(currentDCON.tokenURI);
     }
 }

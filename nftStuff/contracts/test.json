@@ -1,0 +1,45 @@
+{
+  "name": "Dynamic Carbon Offset NFT",
+  "description": "This Dynamic Carbon Offset NFT (DCON) represents 0xD4d956d5a1e27500b2D5Fb20Fa25f1Ef3E0B4B5A's carbon footprint and offset. This is a POC from Graph Hack 2022",
+  "image": "https://ipfs.io/ipfs/bafybeigbjr7ataao4kctt33l3druqvyn6u67d3oa3od3zj37mad2ealvje",
+  "attributes": [
+    {
+      "display_type": "date",
+      "trait_type": "Mint Day",
+      "value": "1654409227"
+    },
+    {
+      "trait_type": "Created By",
+      "value": "0xD4d956d5a1e27500b2D5Fb20Fa25f1Ef3E0B4B5A"
+    },
+    { "trait_type": "Category", "value": "flower" },
+    { "trait_type": "Status", "value": "Full Bloom" },
+    { "trait_type": "level", "value": 3 },
+    {
+      "display_type": "number",
+      "trait_type": "Total Carbon Offset",
+      "value": 45
+    },
+    {
+      "display_type": "number",
+      "trait_type": "Total Carbon Footprint",
+      "value": 15
+    },
+    {
+      "trait_type": "Country",
+      "value": "Greenland"
+    },
+    {
+      "display_type": "number",
+      "trait_type": "Country Annual Emissions",
+      "value": "45000"
+    },
+    {
+      "display_type": "number",
+      "trait_type": "Country Annual Emissions Per Capita",
+      "value": 1
+    }
+  ],
+  "wiltDay": 1655620943,
+  "decayedDay": 1657003343
+}

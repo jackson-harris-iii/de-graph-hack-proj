@@ -33,10 +33,15 @@ export default function Header() {
               ) : (
                 <li className={styles.navItem}>
                   <Link href="/siwe">
-                    <a>Login</a>
+                    <a>Sign-In</a>
                   </Link>
                 </li>
               )}
+              <li className={styles.navItem}>
+                <Link href="https://github.com/jackson-harris-iii/de-graph-hack-proj">
+                  <a target="_blank">Github</a>
+                </Link>
+              </li>
             </ul>
           </Grid>
           <Grid xs={6}>

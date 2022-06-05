@@ -1,20 +1,17 @@
-import { Card, Col, Row, Button, Text } from "@nextui-org/react";
-
-const NftCard = () => (
-  <Card cover css={{ w: "100%" }}>
-    <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
+import { Card, Col, Row, Button, Text } from '@nextui-org/react';
+//@ts-ignore
+const NftCard = ({ nft }) => (
+  <Card cover css={{ w: '100%' }}>
+    <Card.Header css={{ position: 'absolute', zIndex: 1, top: 5 }}>
       <Col>
         <Text size={12} weight="bold" transform="uppercase" color="#ffffffAA">
-          New
-        </Text>
-        <Text h3 color="black">
-          Acme camera
+          My Dynamic Carbon NFT
         </Text>
       </Col>
     </Card.Header>
     <Card.Body>
       <Card.Image
-        src="https://nextui.org/images/card-example-6.jpeg"
+        src={nft.metadata.image}
         height={400}
         width="100%"
         alt="Card example background"
@@ -23,9 +20,9 @@ const NftCard = () => (
     <Card.Footer
       blur
       css={{
-        position: "absolute",
-        bgBlur: "#ffffff",
-        borderTop: "$borderWeights$light solid rgba(255, 255, 255, 0.2)",
+        position: 'absolute',
+        bgBlur: '#ffffff',
+        borderTop: '$borderWeights$light solid rgba(255, 255, 255, 0.2)',
         bottom: 0,
         zIndex: 1,
       }}
@@ -43,12 +40,12 @@ const NftCard = () => (
           <Row justify="flex-end">
             <Button flat auto rounded color="secondary">
               <Text
-                css={{ color: "inherit" }}
+                css={{ color: 'inherit' }}
                 size={12}
                 weight="bold"
                 transform="uppercase"
               >
-                Notify Me
+                open sea
               </Text>
             </Button>
           </Row>
@@ -58,4 +55,4 @@ const NftCard = () => (
   </Card>
 );
 
-export default NftCard
+export default NftCard;

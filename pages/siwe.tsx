@@ -1,7 +1,7 @@
 import { getCsrfToken, signIn, useSession, signOut } from 'next-auth/react';
 import { SiweMessage } from 'siwe';
 import { useAccount, useConnect, useNetwork, useSignMessage } from 'wagmi';
-import { Button } from '@nextui-org/react';
+import { Button, Grid } from '@nextui-org/react';
 import Layout from '../Components/layout';
 
 function Siwe() {
@@ -25,12 +25,13 @@ function Siwe() {
       const { data: signature, error } = await signMessage({
         message: message.prepareMessage(),
       });
-      signIn('credentials', {
+      await signIn('credentials', {
         message: JSON.stringify(message),
         redirect: false,
         signature,
         callbackUrl,
       });
+      window.location.href = '/myhome';
     } catch (error) {
       window.alert(error);
     }
@@ -42,26 +43,34 @@ function Siwe() {
     <>
       {session ? (
         <Layout>
-          <Button
-            href={`/api/auth/signout`}
-            onClick={(e) => {
-              e.preventDefault();
-              signOut();
-            }}
-          >
-            Sign out
-          </Button>
+          <Grid.Container justify="center">
+            <Grid xs={10} justify="center">
+              <Button
+                href={`/api/auth/signout`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  signOut();
+                }}
+              >
+                Sign out
+              </Button>
+            </Grid>
+          </Grid.Container>
         </Layout>
       ) : (
         <Layout>
-          <Button
-            onClick={(e) => {
-              e.preventDefault();
-              handleLogin();
-            }}
-          >
-            Sign-in
-          </Button>
+          <Grid.Container justify="center">
+            <Grid xs={10} justify="center">
+              <Button
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleLogin();
+                }}
+              >
+                Sign-In w/Ethereum
+              </Button>
+            </Grid>
+          </Grid.Container>
         </Layout>
       )}
     </>
