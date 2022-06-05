@@ -28,6 +28,7 @@ const PurchaseNft = ({ spendMethod }) => {
   useEffect(() => {
     const names = countryData.map((country) => Object.keys(country)[0]);
     console.log(names);
+    //@ts-ignore
     setCountries(names);
   }, []);
 
