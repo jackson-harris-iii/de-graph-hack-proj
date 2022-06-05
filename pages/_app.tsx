@@ -4,7 +4,7 @@ import { AppProps } from 'next/app';
 // 1. import `NextUIProvider` component
 import { NextUIProvider } from '@nextui-org/react';
 import { SessionProvider } from 'next-auth/react';
-import { WagmiProvider, WagmiConfig, createClient } from 'wagmi';
+import { WagmiProvider } from 'wagmi';
 
 // const client = createClient();
 
@@ -40,12 +40,12 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       {/* <WagmiConfig client={client}> */}
       <WagmiProvider autoConnect>
-      <SessionProvider session={pageProps.session} refetchInterval={0}>
-        <NextUIProvider>
-          <Component {...pageProps} />
-        </NextUIProvider>
+        <SessionProvider session={pageProps.session} refetchInterval={0}>
+          <NextUIProvider>
+            <Component {...pageProps} />
+          </NextUIProvider>
         </SessionProvider>
-        </WagmiProvider>
+      </WagmiProvider>
       {/* </WagmiConfig> */}
     </>
   );
