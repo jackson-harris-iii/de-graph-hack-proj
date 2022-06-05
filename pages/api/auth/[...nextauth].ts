@@ -26,12 +26,12 @@ export default async function auth(
         },
       },
       async authorize(credentials) {
+        console.log('these are the creds', credentials);
         try {
           const siwe = new SiweMessage(
             JSON.parse(credentials?.message || '{}')
           );
-          // @ts-ignore
-          const nextAuthUrl = new URL(process.env.NEXTAUTH_URL);
+          const nextAuthUrl = new URL(process.env.NEXTAUTH_URL as string | URL);
           if (siwe.domain !== nextAuthUrl.host) {
             return null;
           }
