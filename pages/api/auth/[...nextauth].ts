@@ -1,3 +1,4 @@
+import { NextApiRequest, NextApiResponse } from 'next';
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { getCsrfToken } from 'next-auth/react';
@@ -5,7 +6,10 @@ import { SiweMessage } from 'siwe';
 
 // For more information on each option (and a full list of options) go to
 // https://next-auth.js.org/configuration/options
-export default async function auth(req, res) {
+export default async function auth(
+  req: NextApiRequest,
+  res: NextApiResponse<any>
+) {
   const providers = [
     CredentialsProvider({
       name: 'Ethereum',
@@ -26,6 +30,7 @@ export default async function auth(req, res) {
           const siwe = new SiweMessage(
             JSON.parse(credentials?.message || '{}')
           );
+          // @ts-ignore
           const nextAuthUrl = new URL(process.env.NEXTAUTH_URL);
           if (siwe.domain !== nextAuthUrl.host) {
             return null;
@@ -64,7 +69,9 @@ export default async function auth(req, res) {
     callbacks: {
       async session({ session, token }) {
         session.address = token.sub;
+        // @ts-ignore
         session.user.name = token.sub;
+        // @ts-ignore
         session.user.image = 'https://www.fillmurray.com/128/128';
         return session;
       },
