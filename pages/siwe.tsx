@@ -2,8 +2,7 @@ import { getCsrfToken, signIn, useSession, signOut } from 'next-auth/react';
 import { SiweMessage } from 'siwe';
 import { useAccount, useConnect, useNetwork, useSignMessage } from 'wagmi';
 import { Button } from '@nextui-org/react';
-// @ts-ignore
-import Layout from '../components/layout';
+import Layout from '../Components/layout';
 
 function Siwe() {
   const [{ data: connectData }, connectAsync] = useConnect();
