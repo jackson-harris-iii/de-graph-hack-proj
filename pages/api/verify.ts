@@ -1,31 +1,33 @@
-import { withIronSessionApiRoute } from "iron-session/next"
-import { NextApiRequest, NextApiResponse } from "next"
-import { SiweMessage } from "siwe"
-import { ironOptions } from "./ironOptions"
+import { withIronSessionApiRoute } from 'iron-session/next';
+import { NextApiRequest, NextApiResponse } from 'next';
+import { SiweMessage } from 'siwe';
+import { ironOptions } from './ironOptions';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { method } = req
+  const { method } = req;
   switch (method) {
-    case "POST":
+    case 'POST':
       try {
-        const { message, signature } = req.body
-        const siweMessage = new SiweMessage(message)
-        const fields = await siweMessage.validate(signature)
+        const { message, signature } = req.body;
+        const siweMessage = new SiweMessage(message);
+        const fields = await siweMessage.validate(signature);
 
+        // @ts-ignore
         if (fields.nonce !== req.session.nonce)
-          return res.status(422).json({ message: "Invalid nonce." })
+          return res.status(422).json({ message: 'Invalid nonce.' });
 
-        req.session.siwe = fields
-        await req.session.save()
-        res.json({ ok: true })
+        // @ts-ignore
+        req.session.siwe = fields;
+        await req.session.save();
+        res.json({ ok: true });
       } catch (_error) {
-        res.json({ ok: false })
+        res.json({ ok: false });
       }
-      break
+      break;
     default:
-      res.setHeader("Allow", ["POST"])
-      res.status(405).end(`Method ${method} Not Allowed`)
+      res.setHeader('Allow', ['POST']);
+      res.status(405).end(`Method ${method} Not Allowed`);
   }
-}
+};
 
-export default withIronSessionApiRoute(handler, ironOptions)
+export default withIronSessionApiRoute(handler, ironOptions);
